@@ -1,0 +1,79 @@
+{
+  "userId": "public",
+  "appId": "66e00affa25c",
+  "active": true,
+  "category": "technology",
+  "chatVendor": "bedrock",
+  "kbDescription": "Enable top chat models to perform internet searches, web browsing, and other API-supported tasks.",
+  "kbTitle": "AI Tools",
+  "model": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+  "inputTools": [
+    "imageToText",
+    "speechToText"
+  ],
+  "installation": {
+    "requireAtLeastOneOptional": true
+  },
+  "embeddingModel": "text-embedding-3-small",
+  "embeddingDimension": 1536,
+  "searchEngine": "IndexedDB",
+  "itemTypes": {},
+  "optionalServices": [
+    {
+      "codeSnippet": "        [/\\/?textToImage\\(\"(.*)\"\\)/, async (match) => {\n            const response = await openkbs.textToImage(match[1], { serviceId: '{{openkbsService.id}}' });\n            const imageSrc = `data:${response.ContentType};base64,${response.base64Data}`;\n            return { type: 'SAVED_CHAT_IMAGE', imageSrc, ...meta };\n        }],",
+      "instructionSnippet": "/textToImage(\"image prompt\")\nDescription: \"\"\"\nGenerates  images by text prompt (English only supported).\n\n A good prompt needs to be detailed and specific.\n A good process is to look through a list of keyword categories and decide whether you want to use any of them.\n The keyword categories are:\n\n Subject - The subject is what you want to see in the image. A common mistake is not writing enough about the subjects. (e.g., beautiful and powerful mysterious sorceress, smile, sitting on a rock, lightning magic, hat, detailed leather clothing with gemstones, dress, castle background)\n Medium - Medium is the material used to make artwork. Some examples are illustration, oil painting, 3D rendering, and photography. Medium has a strong effect because one keyword alone can dramatically change the style. (e.g., digital art)\n Style - The style refers to the artistic style of the image. Examples include impressionist, surrealist, pop art, etc. (e.g., impressionist, surrealist, pop art)\n Art-sharing website - Niche graphic websites such as Artstation and Deviant Art aggregate many images of distinct genres. Using them in a prompt is a sure way to steer the image toward these styles. (e.g., Artstation)\n Resolution - Resolution represents how sharp and detailed the image is. Let’s add keywords highly detailed and sharp focus. (e.g., highly detailed, sharp focus, 8k)\n Additional details - Additional details are sweeteners added to modify an image. We will add sci-fi and dystopian to add some vibe to the image. (e.g., sci-fi, dystopian)\n Color - You can control the overall color of the image by adding color keywords. The colors you specified may appear as a tone or in objects. (e.g., iridescent gold)\n Lighting - Any photographer would tell you lighting is key to creating successful images. Lighting keywords can have a huge effect on how the image looks. Let’s add studio lighting to make it studio photo-like. (e.g., studio lighting)\n Remarks - You may have noticed the images are already pretty good with only a few keywords added. More is not always better when building a prompt. You often don’t need many keywords to get good images.\n\"\"\"\n$InputLabel = \"\"\"Let me Generate Image!\"\"\"\n$InputValue = \"\"\"Generate a cover image for a health and weight loss campaign\"\"\"",
+      "interface": "text-to-image",
+      "type": "backend-chat-function"
+    },
+    {
+      "codeSnippet": "        [/\\/?googleSearch\\(\"(.*)\"\\)/, async (match) => {\n            const q = match[1];\n            const searchParams = match[2] && JSON.parse(match[2]) || {};\n            try {\n                const noSecretsProvided = '{{secrets.googlesearch_api_key}}'.includes('secrets.googlesearch_api_key');\n\n                const params = {\n                    q,\n                    ...searchParams,\n                    ...(noSecretsProvided ? {} : { key: '{{secrets.googlesearch_api_key}}', cx: '{{secrets.googlesearch_engine_id}}' }),\n                };\n\n                const response = noSecretsProvided\n                    ? await openkbs.googleSearch(params.q, params)\n                    : (await axios.get('https://www.googleapis.com/customsearch/v1', { params }))?.data?.items;\n\n                const data = response?.map(({ title, link, snippet, pagemap }) => ({\n                    title,\n                    link,\n                    snippet,\n                    image: pagemap?.metatags?.[0]?.[\"og:image\"]\n                }));\n\n                return { data, ...meta };\n\n            } catch (e) {\n                return { error: e.toString(), ...meta };\n            }\n        }],",
+      "instructionSnippet": "/googleSearch(\"query\")\nDescription: \"\"\"\nGet results from Google Search API.\n\"\"\"\n$InputLabel = \"\"\"Let me Search in Google!\"\"\"\n$InputValue = \"\"\"Search in google for the latest financial news\"\"\"",
+      "interface": "internet-search",
+      "secrets": [
+        {
+          "description": "Google Search Engine ID",
+          "name": "googlesearch_engine_id",
+          "optional": true
+        },
+        {
+          "description": "API Key",
+          "name": "googlesearch_api_key",
+          "optional": true
+        }
+      ],
+      "type": "backend-chat-function"
+    },
+    {
+      "codeSnippet": "        [/\\/?webpageToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.webpageToText(match[1]);\n\n                // limit output length\n                if (response?.content?.length > 5000) {\n                    response.content = response.content.substring(0, 5000);\n                }\n\n                return { data: response, ...meta };\n            } catch (e) {\n                return { error: e?.toString(), ...meta };\n            }\n        }],",
+      "instructionSnippet": "/webpageToText(\"URL\")\nDescription: \"\"\"\nUse this API to extract a website to text.\n\"\"\"\n$InputLabel = \"\"\"Let me Read Webpage!\"\"\"\n$InputValue = \"\"\"Summarize this webpage https://openkbs.com\"\"\"",
+      "interface": "webpage-to-text",
+      "type": "backend-chat-function"
+    },
+    {
+      "codeSnippet": "        [/\\/?documentToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.documentToText(match[1]);\n\n                // limit output length\n                if (response?.text?.length > 5000) {\n                    response.text = response.text.substring(0, 5000);\n                }\n\n                return { data: response, ...meta };\n            } catch (e) {\n                return { error: e.toString(), ...meta };\n            }\n        }],",
+      "instructionSnippet": "/documentToText(\"documentURL\")\nDescription: \"\"\"\nExtracts text from document URL - csv, text, pdf, docx, doc, xls, xlsx, etc.\n\"\"\"\n$InputLabel = \"\"\"Let me Read Document!\"\"\"\n$InputValue = \"\"\"Read this document https://files.openkbs.com/download/example.pdf\"\"\"",
+      "interface": "doc-to-text",
+      "type": "backend-chat-function"
+    },
+    {
+      "codeSnippet": "        [/\\/?imageToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.imageToText(match[1]);\n\n                if (response?.detections?.[0]?.txt) {\n                    response = { detections: response?.detections?.[0]?.txt };\n                }\n\n                return { data: response, ...meta };\n            } catch (e) {\n                return { error: e.toString(), ...meta };\n            }\n        }],",
+      "instructionSnippet": "/imageToText(\"imageURL\")\nDescription: \"\"\"\nExtracts text from images and returns the result (OCR).\n\"\"\"\n$InputLabel = \"\"\"Let me Read Text from Image!\"\"\"\n$InputValue = \"\"\"Read this invoice https://files.openkbs.com/download/invoice.png\"\"\"",
+      "interface": "ocr",
+      "type": "backend-chat-function"
+    },
+    {
+      "codeSnippet": "        [/\\/?textToSpeech\\(\"(.*)\"\\s*,\\s*\"(.*)\"\\)/, async (match) => {\n            try {\n                const response = await openkbs.textToSpeech(match[2], {\n                    languageCode: match[1]\n                });\n                return { data: response, ...meta };\n            } catch (e) {\n                return { error: e.toString(), ...meta };\n            }\n        }],",
+      "instructionSnippet": "/textToSpeech(\"en-US\", \"text to convert to speech\")\nDescription: \"\"\"\nThe first parameter is the language code of the voice, following the BCP-47 standard.\nThis function converts text to speech and plays it for the user.\n\"\"\"\n$InputLabel = \"\"\"Let me Speak!\"\"\"\n$InputValue = \"\"\"Say, Hello world!\"\"\"",
+      "interface": "text-to-speech",
+      "type": "backend-chat-function"
+    }
+  ],
+  "requiredServices": [
+    {
+      "instructionSnippet": "Every time you type one of the commands below, an API call will be made, and you will get a response from the system.\nOutput only one command per message.\nWhen prompted by the user to write HTML content, enclose it within <html></html> tags for proper system rendering.\nIf an API call fails or you can't extract the required data, retry with a different strategy until the user's request is satisfied.\n\nList of backend APIs you can call to assist the user:\n",
+      "interface": "text-generation",
+      "type": "main-chat-model"
+    }
+  ],
+  "slug": "ai-tools"
+}
