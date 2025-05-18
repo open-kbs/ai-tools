@@ -6,7 +6,7 @@
   "chatVendor": "bedrock",
   "kbDescription": "Enable top chat models to perform internet searches, web browsing, and other API-supported tasks.",
   "kbTitle": "AI Tools",
-  "model": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+  "model": "claude-3-7-sonnet-20250219",
   "inputTools": [
     "imageToText",
     "speechToText"
