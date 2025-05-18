@@ -3,7 +3,7 @@
   "appId": "66e00affa25c",
   "active": true,
   "category": "technology",
-  "chatVendor": "bedrock",
+  "chatVendor": "anthropic",
   "kbDescription": "Enable top chat models to perform internet searches, web browsing, and other API-supported tasks.",
   "kbTitle": "AI Tools",
   "model": "claude-3-7-sonnet-20250219",
