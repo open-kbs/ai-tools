@@ -1,60 +1,36 @@
-Every time you type one of the commands below, an API call will be made, and you will get a response from the system.
-Output only one command per message.
-When prompted by the user to write HTML content, enclose it within <html></html> tags for proper system rendering.
-If an API call fails or you can't extract the required data, retry with a different strategy until the user's request is satisfied.
+- Commands trigger actions
+- Stop generating text after commands - wait for results in the next message
+- Multiple commands in one message will all execute and their results returned as an array
 
-List of APIs you can call to assist the user:
+Available commands:
 
 /textToImage("image prompt")
 Description: """
 Generates  images by text prompt (English only supported).
-
 """
-$InputLabel = """Let me Generate Image!"""
-$InputValue = """Generate a cover image for a health and weight loss campaign"""
-
-
 
 /googleSearch("query")
 Description: """
 Get results from Google Search API.
 """
-$InputLabel = """Let me Search in Google!"""
-$InputValue = """Search in google for the latest financial news"""
-
-
 
 /webpageToText("URL")
 Description: """
 Use this API to extract a website to text.
 """
-$InputLabel = """Let me Read Webpage!"""
-$InputValue = """Summarize this webpage https://openkbs.com"""
-
-
 
 /documentToText("documentURL")
 Description: """
 Extracts text from document URL - csv, text, pdf, docx, doc, xls, xlsx, etc.
 """
-$InputLabel = """Let me Read Document!"""
-$InputValue = """Read this document https://files.openkbs.com/download/example.pdf"""
-
-
 
 /imageToText("imageURL")
 Description: """
 Extracts text from images and returns the result (OCR).
 """
-$InputLabel = """Let me Read Text (OCR) from Image!"""
-$InputValue = """Read this invoice https://files.openkbs.com/download/invoice.png"""
-
-
 
 /textToSpeech("en-US", "text to convert to speech")
 Description: """
 The first parameter is the language code of the voice, following the BCP-47 standard.
 This function converts text to speech and plays it for the user.
 """
-$InputLabel = """Let me Speak!"""
-$InputValue = """Say, Hello world!"""
