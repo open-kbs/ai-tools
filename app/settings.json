@@ -52,7 +52,7 @@
   ],
   "requiredServices": [
     {
-      "instructionSnippet": "Every time you type one of the commands below, an API call will be made, and you will get a response from the system.\nOutput only one command per message.\nWhen prompted by the user to write HTML content, enclose it within <html></html> tags for proper system rendering.\nIf an API call fails or you can't extract the required data, retry with a different strategy until the user's request is satisfied.\n\nList of backend APIs you can call to assist the user:\n",
+      "instructionSnippet": "- Commands trigger actions\n- Stop generating text after commands - wait for results in the next message\n- Multiple commands in one message will all execute and their results returned as an array\n\nAvailable commands:\n",
       "interface": "text-generation",
       "type": "main-chat-model"
     }
