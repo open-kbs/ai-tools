@@ -21,31 +21,31 @@
   "optionalServices": [
     {
       "codeSnippet": "        [/\\/?googleSearch\\(\"(.*)\"\\)/, async (match) => {\n            const q = match[1];\n            try {\n                const response = await openkbs.googleSearch(q, {});\n                const data = response?.map(({ title, link, snippet, pagemap }) => ({\n                    title, link, snippet, image: pagemap?.metatags?.[0]?.[\"og:image\"]\n                }));\n                return { data };\n            } catch (e) {\n                return { error: e.message };\n            }\n        }],",
-      "instructionSnippet": "/googleSearch(\"query\")\nDescription: \"\"\"\nGet results from Google Search API.\n\"\"\"\n$InputLabel = \"\"\"Let me Search in Google!\"\"\"\n$InputValue = \"\"\"Search in google for the latest financial news\"\"\"",
+      "instructionSnippet": "/googleSearch(\"query\")\nDescription: \"\"\"\nGet results from Google Search API.\n\"\"\"",
       "interface": "internet-search",
       "type": "backend-chat-function"
     },
     {
       "codeSnippet": "        [/\\/?webpageToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.webpageToText(match[1]);\n                if(!response?.url) return { data: { error: \"Unable to read website\" } };\n                return { data: response };\n            } catch (e) {\n                return { error: e.response?.data || e };\n            }\n        }],",
-      "instructionSnippet": "/webpageToText(\"URL\")\nDescription: \"\"\"\nUse this API to extract a website to text.\n\"\"\"\n$InputLabel = \"\"\"Let me Read Webpage!\"\"\"\n$InputValue = \"\"\"Summarize this webpage https://openkbs.com\"\"\"",
+      "instructionSnippet": "/webpageToText(\"URL\")\nDescription: \"\"\"\nUse this API to extract a website to text.\n\"\"\"",
       "interface": "webpage-to-text",
       "type": "backend-chat-function"
     },
     {
       "codeSnippet": "        [/\\/?documentToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.documentToText(match[1]);\n                return { data: response };\n            } catch (e) {\n                return { error: e.response.data };\n            }\n        }],",
-      "instructionSnippet": "/documentToText(\"documentURL\")\nDescription: \"\"\"\nExtracts text from document URL - csv, text, pdf, docx, doc, xls, xlsx, etc.\n\"\"\"\n$InputLabel = \"\"\"Let me Read Document!\"\"\"\n$InputValue = \"\"\"Read this document https://files.openkbs.com/download/example.pdf\"\"\"",
+      "instructionSnippet": "/documentToText(\"documentURL\")\nDescription: \"\"\"\nExtracts text from document URL - csv, text, pdf, docx, doc, xls, xlsx, etc.\n\"\"\"",
       "interface": "doc-to-text",
       "type": "backend-chat-function"
     },
     {
       "codeSnippet": "        [/\\/?imageToText\\(\"(.*)\"\\)/, async (match) => {\n            try {\n                let response = await openkbs.imageToText(match[1]);\n\n                if (response?.detections?.[0]?.txt) {\n                    response = { detections: response?.detections?.[0]?.txt };\n                }\n\n                return { data: response };\n            } catch (e) {\n                return { error: e.response.data };\n            }\n        }],",
-      "instructionSnippet": "/imageToText(\"imageURL\")\nDescription: \"\"\"\nExtracts text from images and returns the result (OCR).\n\"\"\"\n$InputLabel = \"\"\"Let me Read Text from Image!\"\"\"\n$InputValue = \"\"\"Read this invoice https://files.openkbs.com/download/invoice.png\"\"\"",
+      "instructionSnippet": "/imageToText(\"imageURL\")\nDescription: \"\"\"\nExtracts text from images and returns the result (OCR).\n\"\"\"",
       "interface": "ocr",
       "type": "backend-chat-function"
     },
     {
       "codeSnippet": "        [/\\/?textToSpeech\\(\"(.*)\"\\s*,\\s*\"(.*)\"\\)/, async (match) => {\n            try {\n                const response = await openkbs.textToSpeech(match[2], {\n                    languageCode: match[1]\n                });\n                return { data: response };\n            } catch (e) {\n                return { error: e.response.data };\n            }\n        }],",
-      "instructionSnippet": "/textToSpeech(\"en-US\", \"text to convert to speech\")\nDescription: \"\"\"\nThe first parameter is the language code of the voice, following the BCP-47 standard.\nThis function converts text to speech and plays it for the user.\n\"\"\"\n$InputLabel = \"\"\"Let me Speak!\"\"\"\n$InputValue = \"\"\"Say, Hello world!\"\"\"",
+      "instructionSnippet": "/textToSpeech(\"en-US\", \"text to convert to speech\")\nDescription: \"\"\"\nThe first parameter is the language code of the voice, following the BCP-47 standard.\nThis function converts text to speech and plays it for the user.\n\"\"\"",
       "interface": "text-to-speech",
       "type": "backend-chat-function"
     }
