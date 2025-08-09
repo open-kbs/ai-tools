@@ -1,10 +1,4 @@
 export const getActions = () => [
-    [/\/?textToImage\("(.*)"\)/, async (match) => {
-        const response = await openkbs.textToImage(match[1], { serviceId: 'stability.sd3Medium' });
-        const imageSrc = `data:${response.ContentType};base64,${response.base64Data}`;
-        return { type: 'SAVED_CHAT_IMAGE', imageSrc };
-    }],
-
     [/\/?googleSearch\("(.*)"\)/, async (match) => {
         const q = match[1];
         try {
