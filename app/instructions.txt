@@ -1,6 +1,6 @@
-- Commands trigger actions
-- Stop generating text after commands - wait for results in the next message
-- Multiple commands in one message will all execute and their results returned as an array
+Every time you type one of the commands below, an API call will be made, and you will get a response from the system.
+Stop generating text after commands - wait for results in the next message
+Multiple commands in one message will all execute and their results returned as an array
 
 Available commands:
 

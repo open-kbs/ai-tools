@@ -52,7 +52,7 @@
   ],
   "requiredServices": [
     {
-      "instructionSnippet": "- Commands trigger actions\n- Stop generating text after commands - wait for results in the next message\n- Multiple commands in one message will all execute and their results returned as an array\n\nAvailable commands:\n",
+      "instructionSnippet": "Every time you type one of the commands below, an API call will be made, and you will get a response from the system.\nStop generating text after commands - wait for results in the next message\nMultiple commands in one message will all execute and their results returned as an array\n\nAvailable commands:",
       "interface": "text-generation",
       "type": "main-chat-model"
     }
