@@ -4,11 +4,6 @@ Multiple commands in one message will all execute and their results returned as 
 
 Available commands:
 
-/textToImage("image prompt")
-Description: """
-Generates  images by text prompt (English only supported).
-"""
-
 /googleSearch("query")
 Description: """
 Get results from Google Search API.
