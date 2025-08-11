@@ -92,18 +92,7 @@ const getActions = () => [
         } catch (e) {
             return { error: e.response.data };
         }
-    }],
-
-    [/\/?textToSpeech\("(.*)"\s*,\s*"(.*)"\)/, async (match) => {
-        try {
-            const response = await openkbs.textToSpeech(match[2], {
-                languageCode: match[1]
-            });
-            return { data: response };
-        } catch (e) {
-            return { error: e.response.data };
-        }
-    }],
+    }]
 ];
 
 ;// CONCATENATED MODULE: ./handler.js

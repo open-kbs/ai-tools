@@ -28,9 +28,3 @@ Extracts text from document URL - csv, text, pdf, docx, doc, xls, xlsx, etc.
 Description: """
 Extracts text from images and returns the result (OCR).
 """
-
-/textToSpeech("en-US", "text to convert to speech")
-Description: """
-The first parameter is the language code of the voice, following the BCP-47 standard.
-This function converts text to speech and plays it for the user.
-"""

@@ -42,12 +42,6 @@
       "instructionSnippet": "/imageToText(\"imageURL\")\nDescription: \"\"\"\nExtracts text from images and returns the result (OCR).\n\"\"\"",
       "interface": "ocr",
       "type": "backend-chat-function"
-    },
-    {
-      "codeSnippet": "        [/\\/?textToSpeech\\(\"(.*)\"\\s*,\\s*\"(.*)\"\\)/, async (match) => {\n            try {\n                const response = await openkbs.textToSpeech(match[2], {\n                    languageCode: match[1]\n                });\n                return { data: response };\n            } catch (e) {\n                return { error: e.response.data };\n            }\n        }],",
-      "instructionSnippet": "/textToSpeech(\"en-US\", \"text to convert to speech\")\nDescription: \"\"\"\nThe first parameter is the language code of the voice, following the BCP-47 standard.\nThis function converts text to speech and plays it for the user.\n\"\"\"",
-      "interface": "text-to-speech",
-      "type": "backend-chat-function"
     }
   ],
   "requiredServices": [
