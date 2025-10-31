@@ -6,7 +6,7 @@
   "chatVendor": "anthropic",
   "kbDescription": "Enable top chat models to perform internet searches, web browsing, and other API-supported tasks.",
   "kbTitle": "AI Tools",
-  "model": "claude-sonnet-4-20250514",
+  "model": "claude-sonnet-4-5-20250929",
   "inputTools": [
     "imageToText",
     "speechToText"
